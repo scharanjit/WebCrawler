@@ -30,41 +30,11 @@ import org.jsoup.select.Elements;
 public class Crawler {
 
     long NUMB = 1000;
-    private final Set<String> urlNavigated = new HashSet<>();       //no duplicates
-    private final List<String> urlRemaining = new LinkedList<>();   //next node address
     private final List<String> links = new LinkedList<>();          // Just a list of URLs
     private Document htmlDocument;
     private final Set searchWords = new HashSet();                  // final set containing searchWords          
 
-    /**
-     *
-     * @param url is the address of website where crawling action will occur
-     * @param searchString contains year it will call find method & find all the
-     * href (hypertext reference of other pages it will also match the search
-     * String after calling matchWord method this method will search all the
-     * links present in the provided url
-     */
-//    public void search(String url, String searchString) {
-//
-//        while (this.urlNavigated.size() < NUMB) {
-//            String currentUrl;
-//            if (this.urlRemaining.isEmpty()) {
-//                currentUrl = url;
-//                this.urlNavigated.add(url);
-//            } else {
-//                currentUrl = this.nextUrl();
-//            }
-//            find(currentUrl, searchString);  //check href of all urls & sav dem to links
-//
-//            boolean success = matchWord(searchString); //matching the search world..2014
-//            if (success) {
-//                break;
-//            }
-//            this.urlRemaining.addAll(nextPath());
-//
-//        }
-//
-//    }
+
 
     /**
      *
@@ -103,33 +73,6 @@ public class Crawler {
 
     }
 
-    /**
-     *
-     * @param searchWord
-     * @return boolean output true or false This method takes single parameter
-     * search word And match it to the available list of urls
-     */
-//    public boolean matchWord(String searchWord) {
-//        try {
-//            String bodyText;
-//
-//            bodyText = this.htmlDocument.body().text();
-//            return bodyText.toLowerCase(Locale.ENGLISH).contains(searchWord.toLowerCase(Locale.ENGLISH));
-//        } catch (NullPointerException ex) {
-//            System.out.println(searchWord+" Not found");
-//             Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);
-//        } 
-//        return false;
-//
-//    }
-
-    /**
-     *
-     * @return This method will always return the next node in the Linkedlist
-     */
-//    public List<String> nextPath() {
-//        return this.links;
-//    }
 
     /**
      * This method will download all the files matching with search Word
@@ -174,13 +117,4 @@ public class Crawler {
         });
     }
 
-//    private String nextUrl() //always return new url
-//    {
-//        String nextUrl;
-//        do {
-//            nextUrl = this.urlRemaining.remove(0);//removes all url
-//        } while (this.urlNavigated.contains(nextUrl)); //checking in set
-//        this.urlNavigated.add(nextUrl);
-//        return nextUrl;
-//    }
 }
