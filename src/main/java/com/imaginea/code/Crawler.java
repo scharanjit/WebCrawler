@@ -127,9 +127,9 @@ public class Crawler {
      *
      * @return This method will always return the next node in the Linkedlist
      */
-    public List<String> nextPath() {
-        return this.links;
-    }
+//    public List<String> nextPath() {
+//        return this.links;
+//    }
 
     /**
      * This method will download all the files matching with search Word
