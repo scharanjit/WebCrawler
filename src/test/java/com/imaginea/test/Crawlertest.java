@@ -5,7 +5,7 @@
  */
 package com.imaginea.test;
 
-import com.imaginea.Crawler.WebJava;
+import com.imaginea.code.Crawler;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -14,18 +14,21 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  *
  * @author charanjiths
  */
-public class Webjavetest {
+public class Crawlertest {
 
-    private static WebJava webjava;
+    private static Crawler webjava;
 
     @BeforeClass
     public static void initWebJava() {
-        webjava = new WebJava();
+        webjava = new Crawler();
     }
 
     @Before

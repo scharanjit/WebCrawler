@@ -1,7 +1,7 @@
 /*
- * File Name: WebJava.java
+ * File Name: Crawler.java
  */
-package com.imaginea.Crawler;
+package com.imaginea.code;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -28,7 +28,7 @@ import org.jsoup.select.Elements;
  *
  * @author charanjiths
  */
-public class WebJava {
+public class Crawler {
 
     long NUMB = 1000;
     private final Set<String> urlNavigated = new HashSet<>();       //no duplicates
@@ -83,7 +83,7 @@ public class WebJava {
             htmlDocument = connection.get();
             //  this.htmlDocument = htmlDocument;
         } catch (IOException ex) {
-            Logger.getLogger(WebJava.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         Elements linksOnPage = htmlDocument.select("a[href]");
@@ -117,8 +117,9 @@ public class WebJava {
             bodyText = this.htmlDocument.body().text();
             return bodyText.toLowerCase(Locale.ENGLISH).contains(searchWord.toLowerCase(Locale.ENGLISH));
         } catch (NullPointerException ex) {
-        } catch (Exception ex) {
-        }
+            System.out.println(searchWord+" Not found");
+             Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);
+        } 
         return false;
 
     }
@@ -144,7 +145,7 @@ public class WebJava {
             try {
                 link = new URL(s.toString());
             } catch (MalformedURLException ex) {
-                Logger.getLogger(WebJava.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);
             }
             ByteArrayOutputStream out = null;
             try (InputStream in = new BufferedInputStream(link.openStream())) {
@@ -156,19 +157,19 @@ public class WebJava {
                 }
                 out.close();
             } catch (IOException ex) {
-                Logger.getLogger(WebJava.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);
             }
             byte[] response = out.toByteArray();
             File file = new File(s.toString().substring(53, 64));
             try {
                 file.createNewFile();
             } catch (IOException ex) {
-                Logger.getLogger(WebJava.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);
             }
             try (FileOutputStream fos = new FileOutputStream(file)) {
                 fos.write(response);
             } catch (IOException ex) {
-                Logger.getLogger(WebJava.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         });

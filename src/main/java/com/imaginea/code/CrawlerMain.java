@@ -3,21 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.imaginea.Crawler;
+package com.imaginea.code;
 
 /**
  *
  * @author charanjiths
  */
-public class WebJavaMain {
+public class CrawlerMain {
 
     /**
      *
      * @param args
      */
     public static void main(String[] args) {
-        WebJava w= new WebJava();
-            w.search("http://mail-archives.apache.org/mod_mbox/maven-users/","2014");//link and searchword
+        Crawler w= new Crawler();
+        w.search("http://mail-archives.apache.org/mod_mbox/maven-users/","2014");//link and searchword
         
         
     }
