@@ -14,7 +14,6 @@ import java.net.URL;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -175,13 +174,13 @@ public class Crawler {
         });
     }
 
-    private String nextUrl() //always return new url
-    {
-        String nextUrl;
-        do {
-            nextUrl = this.urlRemaining.remove(0);//removes all url
-        } while (this.urlNavigated.contains(nextUrl)); //checking in set
-        this.urlNavigated.add(nextUrl);
-        return nextUrl;
-    }
+//    private String nextUrl() //always return new url
+//    {
+//        String nextUrl;
+//        do {
+//            nextUrl = this.urlRemaining.remove(0);//removes all url
+//        } while (this.urlNavigated.contains(nextUrl)); //checking in set
+//        this.urlNavigated.add(nextUrl);
+//        return nextUrl;
+//    }
 }
