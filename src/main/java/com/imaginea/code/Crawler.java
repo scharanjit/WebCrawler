@@ -34,8 +34,6 @@ public class Crawler {
     private Document htmlDocument;
     private final Set searchWords = new HashSet();                  // final set containing searchWords          
 
-
-
     /**
      *
      * @param currentUrl
@@ -65,14 +63,15 @@ public class Crawler {
         links.stream().filter((l) -> (l.contains(searchString))).forEach((l) -> {
             searchWords.add(l.substring(0, 64));
         });
-        if (searchWords != null) {
+        if (!searchWords.isEmpty()) {
             download(searchWords); //download the files containing searchString
             return true;
+        } else {
+            System.out.println("Search String NOt found");
         }
+
         return false;
-
     }
-
 
     /**
      * This method will download all the files matching with search Word
