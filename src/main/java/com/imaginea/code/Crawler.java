@@ -45,27 +45,27 @@ public class Crawler {
      * String after calling matchWord method this method will search all the
      * links present in the provided url
      */
-    public void search(String url, String searchString) {
-
-        while (this.urlNavigated.size() < NUMB) {
-            String currentUrl;
-            if (this.urlRemaining.isEmpty()) {
-                currentUrl = url;
-                this.urlNavigated.add(url);
-            } else {
-                currentUrl = this.nextUrl();
-            }
-            find(currentUrl, searchString);  //check href of all urls & sav dem to links
-
-            boolean success = matchWord(searchString); //matching the search world..2014
-            if (success) {
-                break;
-            }
-            this.urlRemaining.addAll(nextPath());
-
-        }
-
-    }
+//    public void search(String url, String searchString) {
+//
+//        while (this.urlNavigated.size() < NUMB) {
+//            String currentUrl;
+//            if (this.urlRemaining.isEmpty()) {
+//                currentUrl = url;
+//                this.urlNavigated.add(url);
+//            } else {
+//                currentUrl = this.nextUrl();
+//            }
+//            find(currentUrl, searchString);  //check href of all urls & sav dem to links
+//
+//            boolean success = matchWord(searchString); //matching the search world..2014
+//            if (success) {
+//                break;
+//            }
+//            this.urlRemaining.addAll(nextPath());
+//
+//        }
+//
+//    }
 
     /**
      *
@@ -110,19 +110,19 @@ public class Crawler {
      * @return boolean output true or false This method takes single parameter
      * search word And match it to the available list of urls
      */
-    public boolean matchWord(String searchWord) {
-        try {
-            String bodyText;
-
-            bodyText = this.htmlDocument.body().text();
-            return bodyText.toLowerCase(Locale.ENGLISH).contains(searchWord.toLowerCase(Locale.ENGLISH));
-        } catch (NullPointerException ex) {
-            System.out.println(searchWord+" Not found");
-             Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-        return false;
-
-    }
+//    public boolean matchWord(String searchWord) {
+//        try {
+//            String bodyText;
+//
+//            bodyText = this.htmlDocument.body().text();
+//            return bodyText.toLowerCase(Locale.ENGLISH).contains(searchWord.toLowerCase(Locale.ENGLISH));
+//        } catch (NullPointerException ex) {
+//            System.out.println(searchWord+" Not found");
+//             Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);
+//        } 
+//        return false;
+//
+//    }
 
     /**
      *
