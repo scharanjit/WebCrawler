@@ -7,19 +7,20 @@ package com.imaginea.code;
 
 
 
+
 /**
  *
  * @author charanjiths
  */
-public class CrawlerMain {
+public class CrawlerApplication {
 
     /**
      *
      * @param args
      */
-    public static void main(String[] args)  {
+    public static void main(String[] args)   {
         Crawler w= new Crawler();
-        w.find("http://mail-archives.apache.org/mod_mbox/maven-users/","2014");//link and searchword
+        w.findWord("http://mail-archives.apache.org/mod_mbox/maven-users/","2014");//link and searchword
         
         
     }

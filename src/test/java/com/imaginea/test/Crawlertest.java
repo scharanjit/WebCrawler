@@ -42,7 +42,7 @@ public class Crawlertest {
     public void testFind() {
         String url="http://www.deccanchronicle.com/";
         String searchString="TOP STORIES";
-      boolean m=  webjava.find(url, searchString);
+      boolean m=  webjava.findWord(url, searchString);
         System.out.println(m);
         assertTrue(m);
     }

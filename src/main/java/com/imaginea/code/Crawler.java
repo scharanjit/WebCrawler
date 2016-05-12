@@ -10,11 +10,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
+import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,57 +42,75 @@ public class Crawler {
      * @param currentUrl
      * @param searchString
      * @return true or false it will build a Connection using user agent of
-     * availble browser This method finds the href (hypertext reference) from
-     * the availble links after successful match found,it will call download
-     * method
+ availble browser This method finds the href (hypertext reference) from
+ the availble links after successful match found,it will call downloadMails
+ method
      */
-    public boolean find(String currentUrl, String searchString) {
+    public boolean findWord(String currentUrl, String searchString) {
+        if (isValidURL(currentUrl)) {
+            
+            try {
+                Connection connection = Jsoup.connect(currentUrl);
+                htmlDocument = connection.get();
+            } catch (Exception ex) {
+                System.out.println("Connection Not Established");
+                return false;
+            }
 
-        Connection connection = Jsoup.connect(currentUrl);
-        try {
-            htmlDocument = connection.get();
-            //  this.htmlDocument = htmlDocument;
-        } catch (IOException ex) {
-            Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            Elements linksOnPage = htmlDocument.select("a[href]");
+            linksOnPage.stream().forEach((link) -> {
+                //finding next url present on page
+                //hyperlink
+                this.links.add(link.absUrl("href")); //adding next link in a linked list
+            });
 
-        Elements linksOnPage = htmlDocument.select("a[href]");
-        linksOnPage.stream().forEach((link) -> {
-            //finding next url present on page
-            //hyperlink
-            this.links.add(link.absUrl("href")); //adding next link in a linked list
-        });
-
-        links.stream().filter((l) -> (l.contains(searchString))).forEach((l) -> {
-            searchWords.add(l.substring(0, 64));
-        });
-        if (!searchWords.isEmpty()) {
-            download(searchWords); //download the files containing searchString
-            return true;
-        } else {
-            System.out.println("Search String NOt found");
+            links.stream().filter((l) -> (l.contains(searchString))).forEach((l) -> {
+                searchWords.add(l.substring(0, 64));
+            });
+            if (!searchWords.isEmpty()) {
+                downloadMails(searchWords); //download the files containing searchString
+                System.out.println("----------SUCCESS-------------");
+                return true;
+            } else {
+                System.out.println("Search String NOt found");
+            }
         }
 
         return false;
     }
 
     /**
-     * This method will download all the files matching with search Word
-     * criteria
+     *
+     * @param urlStr is the url entered by the user
+     * @return url itself if it is valid one else false
+     */
+    public boolean isValidURL(String urlStr) {
+        try {
+            String lclStr = urlStr.trim().toLowerCase(Locale.ENGLISH);
+            URI uri = new URI(lclStr);
+            return uri.getScheme().equals("http") || uri.getScheme().equals("https");
+        } catch (Exception ex) {
+            System.out.println("Invalid URL");
+            return false;
+        }
+    }
+
+    /**
+     * This method will downloadMails all the files matching with search Word
+ criteria
      *
      * @param word
      */
-    public void download(Set word) {
+    public void downloadMails(Set word) {
         word.stream().forEach((Object s) -> {
-
-            URL link = null;
             try {
+                FileOutputStream fos;
+                URL link;
+
                 link = new URL(s.toString());
-            } catch (MalformedURLException ex) {
-                Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            ByteArrayOutputStream out = null;
-            try (InputStream in = new BufferedInputStream(link.openStream())) {
+
+                ByteArrayOutputStream out;
+                InputStream in = new BufferedInputStream(link.openStream());
                 out = new ByteArrayOutputStream();
                 byte[] buf = new byte[1024];
                 int n = 0;
@@ -97,20 +118,18 @@ public class Crawler {
                     out.write(buf, 0, n);
                 }
                 out.close();
-            } catch (IOException ex) {
-                Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            byte[] response = out.toByteArray();
-            File file = new File(s.toString().substring(53, 64));
-            try {
+
+                byte[] response = out.toByteArray();
+                File file = new File(s.toString().substring(53, 64));
+
                 file.createNewFile();
-            } catch (IOException ex) {
-                Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try (FileOutputStream fos = new FileOutputStream(file)) {
+                fos = new FileOutputStream(file);
                 fos.write(response);
+                fos.close();
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, (Supplier<String>) ex);
             } catch (IOException ex) {
-                Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, (Supplier<String>) ex);
             }
 
         });
