@@ -26,6 +26,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import org.apache.commons.lang.RandomStringUtils;
 /**
  *
  * @author charanjiths
@@ -35,7 +36,7 @@ public class Crawler {
     long NUMB = 1000;
     private final List<String> links = new LinkedList<>();          // Just a list of URLs
     private Document htmlDocument;
-    private final Set searchWords = new HashSet();                  // final set containing searchWords          
+    private final HashSet searchWords = new HashSet();                  // final set containing searchWords          
 
     /**
      *
@@ -65,7 +66,7 @@ public class Crawler {
             });
 
             links.stream().filter((l) -> (l.contains(searchString))).forEach((l) -> {
-                searchWords.add(l.substring(0, 64));
+                searchWords.add(l);
             });
             if (!searchWords.isEmpty()) {
                 downloadMails(searchWords); //download the files containing searchString
@@ -99,11 +100,12 @@ public class Crawler {
      * This method will downloadMails all the files matching with search Word
  criteria
      *
-     * @param word
+     * @param resultURLs
      */
-    public void downloadMails(Set word) {
-        word.stream().forEach((Object s) -> {
+    public void downloadMails(HashSet resultURLs) {
+        resultURLs.stream().forEach((s) -> {
             try {
+                
                 FileOutputStream fos;
                 URL link;
 
@@ -120,7 +122,9 @@ public class Crawler {
                 out.close();
 
                 byte[] response = out.toByteArray();
-                File file = new File(s.toString().substring(53, 64));
+                String ext="txt";
+                String name = String.format("%s.%s", RandomStringUtils.randomAlphanumeric(4), ext);
+                File file = new File(name);
 
                 file.createNewFile();
                 fos = new FileOutputStream(file);
