@@ -32,7 +32,8 @@ public class Crawler {
     private static final Logger LOG = Logger.getLogger(Crawler.class.getName());
 
     /**
-     *This method is used to validate the URL
+     * This method is used to validate the URL
+     *
      * @param urlStr user input
      * @return true if valid otherwise false if not valid
      */
@@ -50,7 +51,9 @@ public class Crawler {
     }
 
     /**
-     *This method is used to create a connection with webpage using JSOup Utility
+     * This method is used to create a connection with webpage using JSOup
+     * Utility
+     *
      * @param url user entered url
      * @return
      */
@@ -74,7 +77,7 @@ public class Crawler {
      * @param url user entered url
      * @param pattern is the matching text in particular webpage
      */
-    public static void find(String url, String pattern) {
+    public static boolean find(String url, String pattern) {
         LOG.info("Inside find method");
         if (!pattern.equals("")) {
             if (isValidURL(url)) {
@@ -92,11 +95,12 @@ public class Crawler {
         } else {
             LOG.warning("Invalid Pattern");
         }
-
+        return false;
     }
 
     /**
-     *This method populates the Set with matching pattern urls
+     * This method populates the Set with matching pattern urls
+     *
      * @param pattern text
      * @param htmlDoc
      * @return
@@ -120,7 +124,8 @@ public class Crawler {
     }
 
     /**
-     *This method will download the data from Set of urls
+     * This method will download the data from Set of urls
+     *
      * @param resultURLs
      */
     private static void download(HashSet<String> resultURLs) {
@@ -152,7 +157,7 @@ public class Crawler {
 
                 byte[] response = out.toByteArray();
                 String ext = "txt";
-                String name = String.format("%s.%s", System.nanoTime(), ext);
+                String name = String.format("%s.%s", System.nanoTime(), ext);//s.toString().substring(53, 58) as per busness requirement
                 File file = new File(name);
 
                 file.createNewFile();
