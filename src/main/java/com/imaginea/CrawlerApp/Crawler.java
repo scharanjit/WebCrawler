@@ -32,7 +32,7 @@ public class Crawler {
     private static final Logger LOG = Logger.getLogger(Crawler.class.getName());
 
     /**
-     *
+     *This method is used to validate the URL
      * @param urlStr user input
      * @return true if valid otherwise false if not valid
      */
@@ -50,7 +50,7 @@ public class Crawler {
     }
 
     /**
-     *
+     *This method is used to create a connection with webpage using JSOup Utility
      * @param url user entered url
      * @return
      */
@@ -96,7 +96,7 @@ public class Crawler {
     }
 
     /**
-     *
+     *This method populates the Set with matching pattern urls
      * @param pattern text
      * @param htmlDoc
      * @return
@@ -120,7 +120,7 @@ public class Crawler {
     }
 
     /**
-     *
+     *This method will download the data from Set of urls
      * @param resultURLs
      */
     private static void download(HashSet<String> resultURLs) {
