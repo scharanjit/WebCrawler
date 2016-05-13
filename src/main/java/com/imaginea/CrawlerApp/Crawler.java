@@ -76,6 +76,7 @@ public class Crawler {
      *
      * @param url user entered url
      * @param pattern is the matching text in particular webpage
+     * @return true if success otherwise false
      */
     public static boolean find(String url, String pattern) {
         LOG.info("Inside find method");
